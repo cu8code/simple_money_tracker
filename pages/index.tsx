@@ -1,25 +1,24 @@
-import { useEffect, useRef } from "react";
 import { Line } from "react-chartjs-2"
 import { Chart, registerables } from "chart.js"
-import Titlebar from "../components/titleBar/titleBar";
 
-import { DataHandeler } from "../module/main";
+import Titlebar from "../components/titleBar/titleBar";
+import { Datahandeler,  getLabel, getUserDataPoint } from "../module/dataHandeler";
 
 Chart.register(...registerables)
 
-const datahandeler = new DataHandeler(1000, 100)
+const datahandeler = Datahandeler(1000, 10)
 
 function RecentAcitivity(props: { chartData: number[] }) {
   return <div className="flex fex-col h-20 w-full mt-10 bg-slate-400"></div>;
 }
 
-function Graph(props: { className?: string }) {
+function Graph() {
   const data = {
-    labels: ["1", "2", "3", "4", "5", "6"],
+    labels: getLabel(datahandeler),
     datasets: [
       {
         label: "First dataset",
-        data: [100, 100, 85, 41, 44],
+        data: getUserDataPoint(datahandeler),
         fill: true,
         backgroundColor: "rgba(75,192,192,0.2)",
         borderColor: "rgba(75,192,192,1)"
@@ -33,7 +32,7 @@ function Graph(props: { className?: string }) {
     ]
   };
   return (
-    <Line className={props.className || ""} data={data} />
+    <Line data={data} />
   );
 }
 
@@ -41,7 +40,7 @@ export default function Home() {
   return (
     <>
       <Titlebar />
-      <div className="w-1/3 h-1/3">
+      <div className="w-full max-w-2xl m-auto flex sm:py-5 px-1">
         <Graph />
       </div>
     </>
