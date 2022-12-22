@@ -30,7 +30,7 @@ function Elo() {
         </div>
         <div>
           <div className="flex w-full justify-between bg-slate-100 border-b-2 p-1">
-            <div>****112</div>
+            <div>****112 (default)</div>
             <div className="text-green-500 font-bold">100</div>
           </div>
           <div className="flex w-full justify-between border-b-2 p-1">
