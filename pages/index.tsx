@@ -82,8 +82,14 @@ function Elo() {
         </form>
         <div className="flex w-full justify-center m-1 align-middle ">
           <div className="inline-flex p-2 space-x-1">
-            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">Expense</button>
-            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">Income</button>
+            <button className="flex bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
+              Expense
+              <svg aria-hidden="true" className="w-6 h-6 rotate-90 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+            </button>
+            <button className="flex bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
+              Income
+              <svg aria-hidden="true" className="w-6 h-6 rotate-90 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+            </button>
           </div>
         </div>
       </div>
