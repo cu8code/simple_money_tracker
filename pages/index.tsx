@@ -1,19 +1,28 @@
+import { onAuthStateChanged } from "firebase/auth";
 import { Chart, registerables } from "chart.js"
-import { useRef } from "react";
+import { useEffect, useState } from "react";
+
+import useFirebaseContext from "./firebasecontext";
+import Auth from "../components/auth";
 import Titlebar from "../components/titleBar/titleBar";
 
 Chart.register(...registerables)
 
 
 export default function Home() {
-  const button = useRef<HTMLButtonElement>(null)
+  const [isSinin, setSinin] = useState<boolean>(true)
+  const firebasecontext = useFirebaseContext()
+  useEffect(() => {
+    if (firebasecontext === null) return
+    onAuthStateChanged(firebasecontext.auth, (user) => {
+      if (user) setSinin(true)
+      else { setSinin(false) }
+    })
+  }, [])
   return (
     <>
       <Titlebar />
-      <div className="w-full max-w-2xl m-auto flex sm:py-5 px-1">
-        <input type="text" className="border"></input>
-      </div>
-      <button ref={button} className="w-1/3 m-auto flex ">SAVE</button>
+      {isSinin ? <></> : <Auth />}
     </>
   );
 }
