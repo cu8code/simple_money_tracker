@@ -11,21 +11,21 @@ Chart.register(...registerables)
 export default function Home() {
   const [isSinin, setSinin] = useState<boolean>(true)
   return (
-    <div className="flex flex-col mx-auto max-w-3xl">
+    <>
       <Titlebar />
       {isSinin ? <></> : <AuthSinIn />}
       <Elo></Elo>
-    </div>
+    </>
   );
 }
 
 function Elo() {
   return (
-    <div className="flex flex-col w-full bg-slate-50">
-      { /* next wprth */}
+    <>
+      { /* net wprth */}
       <div className="flex flex-col w-full p-6 text-gray-700 " >
         <div className="flex w-full justify-between border-b-2 py-1">
-          <h1 className="mb-2 text-3xl font-bold tracking-tight ">Next Worth</h1>
+          <h1 className="mb-2 text-3xl font-bold tracking-tight ">Net Worth</h1>
           <h1 className="mb-2 text-3xl font-bold tracking-tight text-green-500">💸18200</h1>
         </div>
         <div>
@@ -49,24 +49,24 @@ function Elo() {
         <form>
           <label className="sr-only">Your message</label>
           <div className="p-1 m-1 overflow-y-scroll">
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+10</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+50</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+100</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+200</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+300</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+500</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+10</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+50</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+100</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+200</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+300</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+500</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+10</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+50</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+100</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+200</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+300</a>
-            <a className="p-1 m-1 bg-red-500 rounded-full text-white">+500</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">10</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">50</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">100</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">200</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">300</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">500</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">10</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">50</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">100</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">200</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">300</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">500</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">10</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">50</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">100</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">200</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">300</a>
+            <a className="p-1 m-1 bg-red-500 rounded-full text-white">500</a>
           </div>
           <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50">
             <button className="inline-flex justify-center p-2 text-gray rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-400">
@@ -95,6 +95,6 @@ function Elo() {
           <p className="font-normal text-gray-700 ">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
         </a>
       </div>
-    </div>
+    </>
   )
 }
