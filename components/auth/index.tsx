@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import { signInWithPopup } from "firebase/auth"
 import useFirebaseContext from "../../pages/firebasecontext"
 
 export default function Auth() {
@@ -7,14 +7,14 @@ export default function Auth() {
   const firebasecontext = useFirebaseContext()
   useEffect(() => {
     if (buttton.current === null) { return }
-    buttton.current.addEventListener("click",(e) => {
-    const googleauth = new GoogleAuthProvider()
-    signInWithPopup(firebasecontext.auth, googleauth).then((res) => {
-      console.log(res.user);
-    })
-
+    buttton.current.addEventListener("click", (e) => {
+      if (firebasecontext === null) return
+      signInWithPopup(firebasecontext.auth, firebasecontext.provider).then(user => {
+        if (user) {
+          console.log(user.user.email);
+        }
       })
-
+    })
   })
   return (
     <div className="fixed top-0 left-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
