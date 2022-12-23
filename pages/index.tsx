@@ -16,17 +16,10 @@ export default function Home() {
     <>
       <Titlebar />
       {isSinin ? <></> : <AuthSinIn />}
-      <Elo></Elo>
+      <NewTransaction />
+      <Balance />
+      <RecentActivity />
     </>
   );
 }
 
-function Elo() {
-  return (
-    <>
-    <NewTransaction />
-    <Balance />
-    <RecentActivity />
-    </>
-  )
-}
