@@ -1,12 +1,26 @@
-import { TextareaHTMLAttributes, useEffect, useRef } from "react"
+import { getApp } from "firebase/app";
+import { Auth, getAuth, NextOrObserver, onAuthStateChanged, User } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
+import { useEffect, useRef, useState } from "react"
 
-type transaction = {
-  date: string,
-  time: string,
-  amount: string,
+type Transaction = {
+  userId: string
+  date: string
+  time: string
+  amount: string
   description: string
 }
 
+
+function writeNewTransaction(args: Transaction) {
+  const db = getDatabase();
+  set(ref(db, 'users/' + args.userId), {
+    date: args.date,
+    time: args.time,
+    amount: args.amount,
+    description: args.description
+  });
+}
 
 
 export default function NewTransaction() {
@@ -15,9 +29,18 @@ export default function NewTransaction() {
   const expenseButton = useRef<HTMLButtonElement | null>(null)
   const cameraButton = useRef<HTMLButtonElement | null>(null)
   const inputElment = useRef<HTMLTextAreaElement | null>(null)
-  const incomeDepositList = useRef<transaction[] | null>(null)
+  const incomeDepositList = useRef<Transaction[] | null>(null)
+  const [issignin, setsigin] = useState<boolean>(false)
+  const [email, setemail] = useState<string | null>(null)
+  const auth = getAuth(getApp())
 
 
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setemail(user.email)
+      setsigin(true)
+    }
+  })
   useEffect(() => {
 
   }, [])
@@ -49,7 +72,7 @@ export default function NewTransaction() {
         </div>
         <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50">
           <button ref={cameraButton} className="inline-flex justify-center p-2 text-gray rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-400">
-            <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>
+            <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"></path></svg>
             <span className="sr-only">Upload image</span>
           </button>
           <textarea ref={inputElment} className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="{amount} {details...}"></textarea>
