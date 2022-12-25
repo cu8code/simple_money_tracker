@@ -5,20 +5,40 @@ import { AuthSinIn } from "../components/auth/";
 import Titlebar from "../components/titleBar/";
 import Balance from "../components/balance";
 import NewTransaction from "../components/newtransaction";
-import RecentActivity from "../components/recentactivity";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAdditionalUserInfo, getAuth, getRedirectResult, onAuthStateChanged } from "firebase/auth";
 import { getApp } from "firebase/app";
+import { getDatabase, ref, set } from "firebase/database";
 
 Chart.register(...registerables)
 
+const db = getDatabase()
+
+
+function inilizieUser(id: string): void {
+  set(ref(db, `user/${id}`), {
+    balance: 0,
+    transactions: [],
+  })
+}
 
 export default function Home() {
-  const [issignin, setsignin] = useState<boolean>(false)
+  const [issignin, setsignin] = useState<boolean>(true)
   const auth = getAuth(getApp())
-  onAuthStateChanged(auth, (user) => {
+
+  getRedirectResult(getAuth()).then(user => {
     if (user) {
-      setsignin(true)
+      const d = getAdditionalUserInfo(user)
+      if (d) {
+        if (d.isNewUser) {
+          inilizieUser(user.user.uid)
+        }
+      }
     }
+  })
+
+  onAuthStateChanged(auth, (result) => {
+    result ? setsignin(true) : setsignin(false)
+    if (result === null) return
   })
   return (
     <>
@@ -26,8 +46,6 @@ export default function Home() {
       {issignin ? <></> : <AuthSinIn />}
       <NewTransaction />
       <Balance />
-      <RecentActivity />
     </>
   );
 }
-

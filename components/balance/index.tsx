@@ -7,22 +7,47 @@ type T = {
   amount: number
 }[] | null
 
+async function getBalance(userid: string) {
+  const db = getDatabase()
+  const dbrf = ref(db)
+  const b = await get(child(dbrf, `user/${userid}/balance`))
+  return b.val() as number | null
+}
+
+async function getTransacrion(userid: string) {
+  const db = getDatabase()
+  const dbrf = ref(db)
+  const b = await get(child(dbrf, `user/${userid}/transaction`))
+  const r = b.val()
+  return r
+}
+
+function unwrapTransaction(e: any | null) {
+  if (e === null) { return <></> }
+  for (const key in e) {
+    if (e.hasOwnProperty(key)) {
+      return (<div key={key} className="flex w-full justify-between bg-slate-100 border-b-2 p-1">
+        <div>{key}</div>
+        <div className="text-green-500 font-bold">{e[key].money}</div>
+      </div>)
+    }
+  }
+}
+
 export default function Balance() {
   const [balance, setbalance] = useState<number | null>(0)
-  const [latestmoneyrecived, setlatesmoneyrecived] = useState<T>(null)
+  const [transaction, setTransaction] = useState<any | null>(null)
+
   onAuthStateChanged(getAuth(), result => {
     if (result) {
-      const dbrf = ref(getDatabase())
-      const userid = result.uid
-      get(child(dbrf, `user/${userid}/balance`)).then((result) => {
-        if (result.exists()) {
-          setbalance(result.val())
-        } else {
-          console.log("ERROR NO VAL");
-        }
-      })
+      getBalance(result.uid).then(result => setbalance(result))
+      getTransacrion(result.uid).then(result => setTransaction(result))
+      window.addEventListener('newtransaction', () => {
+        getTransacrion(result.uid).then(result => setTransaction(result));
+      }, { once: true })
     }
   })
+
   return (
     <div className="flex flex-col w-full p-6 text-gray-700 " >
       <div className="flex w-full justify-between border-b-2 py-1">
@@ -30,19 +55,7 @@ export default function Balance() {
         <h1 className="mb-2 text-3xl font-bold tracking-tight text-green-500">💸{balance}</h1>
       </div>
       <div>
-        <div className="flex w-full justify-center bg-slate-100 border-b-2 p-1"> Latest Money Recived </div>
-        <div className="flex w-full justify-between bg-slate-100 border-b-2 p-1">
-          <div>Fir Dec 23 00:23</div>
-          <div className="text-green-500 font-bold">100</div>
-        </div>
-        <div className="flex w-full justify-between border-b-2 p-1">
-          <div>Fir Dec 20 00:23</div>
-          <div className="text-green-500 font-bold">100</div>
-        </div>
-        <div className="flex w-full justify-between bg-slate-100 border-b-2 p-1">
-          <div>Fir Dec 15 00:23</div>
-          <div className="text-green-500 font-bold">18000</div>
-        </div>
+        {unwrapTransaction(transaction)}
       </div>
     </div>
   )
